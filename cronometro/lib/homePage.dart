@@ -11,7 +11,6 @@ class homePage extends StatefulWidget {
 }
 
 class HomePageState extends State<homePage> {
-  Timer? timer;
   bool isplaying = false;
   int hours = 0;
   int minuts = 0;
@@ -19,7 +18,6 @@ class HomePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(title: Text("Cronômetro")),
       body: Stack(
@@ -50,7 +48,7 @@ class HomePageState extends State<homePage> {
                       SizedBox(
                           width: 100,
                           height: 50,
-                          child: button(Icons.pause, "pause")),
+                          child:button(Icons.pause, "pause")),
                       Container(
                         width: 100,
                       ),
@@ -69,29 +67,34 @@ class HomePageState extends State<homePage> {
     );
   }
 
-  FloatingActionButton button(IconData button, String isplay) {
-    return FloatingActionButton(
+  ElevatedButton button(IconData button, String isplay) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: CircleBorder(
+        side: BorderSide(color: Colors.transparent),
+        ),
+        ),
         onPressed: () {
           switch (isplay) {
             case "play":
               isplaying = true;
-                Timer.periodic(Duration(seconds: 1), (Timer) {
-      setState(() {
-        if (isplaying) {
-          if (secunds < 59) {
-            secunds++;
-          } else if (secunds == 59) {
-            if (minuts == 60) {
-              hours++;
-              minuts = 0;
-            } else {
-              minuts++;
-            }
-            secunds = 0;
-          }
-        }
-      });
-    });
+              Timer.periodic(Duration(seconds: 1), (Timer) {
+                setState(() {
+                  if (isplaying) {
+                    if (secunds < 59) {
+                      secunds++;
+                    } else if (secunds == 59) {
+                      if (minuts == 60) {
+                        hours++;
+                        minuts = 0;
+                      } else {
+                        minuts++;
+                      }
+                      secunds = 0;
+                    }
+                  }
+                });
+              });
               break;
             case "pause":
               isplaying = false;
